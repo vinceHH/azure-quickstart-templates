@@ -4,12 +4,13 @@
   "parameters": {
     "workspaceName": {
       "type": "string",
+      "defaultValue": "Roquettedatabricksint",
       "metadata": {
         "description": "The name of the Azure Databricks workspace to create."
       }
     },
     "pricingTier": {
-      "defaultValue": "premium",
+      "defaultValue": "standard",
       "allowedValues": [
         "trial",
         "standard",
@@ -22,22 +23,30 @@
     },
     "customVirtualNetworkId": {
       "type": "string",
+      "defaultValue": "/subscriptions/08abc3ae-21c4-4b99-9430-06c4445b18df/resourceGroups/RG-EU-TRANSVERSE-Networking/providers/Microsoft.Network/virtualNetworks/VNET-WestEurope-INT-BigData",
       "metadata": {
         "description": "The complete ARM resource Id of the custom virtual network."
       }
     },
     "customPublicSubnetName": {
       "type": "string",
-      "defaultValue": "public-subnet",
+      "defaultValue": "Databricks_Public",
       "metadata": {
         "description": "The name of the public subnet in the custom VNet."
       }
     },
     "customPrivateSubnetName": {
       "type": "string",
-      "defaultValue": "private-subnet",
+      "defaultValue": "Databricks_Private",
       "metadata": {
         "description": "The name of the private subnet in the custom VNet."
+      }
+    },
+    "managedResourceGroupName": {
+      "type": "string",
+      "defaultValue": "RG-EU-INT-DATAL_DATABRICKS_ManagedRG",
+      "metadata": {
+        "description": "The name of the Databricks managed RG"
       }
     },
     "location": {
@@ -49,8 +58,7 @@
     }
   },
   "variables": {
-    "managedResourceGroupId": "[concat(subscription().id, '/resourceGroups/', variables('managedResourceGroupName'))]",
-    "managedResourceGroupName": "[concat('databricks-rg-', parameters('workspaceName'), '-', uniqueString(parameters('workspaceName'), resourceGroup().id))]"
+    "managedResourceGroupId": "[concat(subscription().id, '/resourceGroups/', parameters('managedResourceGroupName'))]"
   },
   "resources": [{
     "apiVersion": "2018-04-01",
